@@ -7,22 +7,23 @@
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
     android:orientation="vertical"
-    tools:context=".AddMoneyActivity">
+    tools:context=".AdjustmentActivity">
 
     <EditText
-        android:id="@+id/edtAddMoney"
+        android:id="@+id/edtAdjustment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
+        android:autofillHints="password"
         android:ems="10"
+        android:hint="Enter your adjusted currency"
         android:inputType="numberDecimal"
-        android:text="0"
         android:textAlignment="viewEnd"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnAddMoney"
+    <ImageButton
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Money" />
+        android:src="@android:drawable/ic_menu_save" />
 </androidx.appcompat.widget.LinearLayoutCompat>

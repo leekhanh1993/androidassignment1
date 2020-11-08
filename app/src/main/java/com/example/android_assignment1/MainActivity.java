@@ -8,12 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final int ADD_MONEY_ACTIVITY_CODE = 100;
-    static final int TRANSACTION_ACTIVITY_CODE = 101;
+    static final int ADJUST_MONEY_ACTIVITY_CODE = 1;
+    static final int TRANSACTION_ACTIVITY_CODE = 2;
     static double totalMoney = 0;
 
     @Override
@@ -22,18 +21,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Create buttons
-        Button btnAddMoneyWallet, btnCreateTran;
-        btnAddMoneyWallet = findViewById(R.id.btnAddMoneyWallet);
+        Button btnAdjustMoneyWallet, btnCreateTran;
+        btnAdjustMoneyWallet = findViewById(R.id.btnAdjustMoneyWallet);
         btnCreateTran = findViewById(R.id.btnCreateTran);
 
         //create listener for buttons
 
-        btnAddMoneyWallet.setOnClickListener(new View.OnClickListener() {
+        btnAdjustMoneyWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddMoneyActivity.class);
-                intent.putExtra("add_money", "Main to AddMoney");
-                startActivityForResult(intent, ADD_MONEY_ACTIVITY_CODE);
+                Intent intent = new Intent(MainActivity.this,
+                        AdjustmentActivity.class);
+                intent.putExtra("total_money", String.valueOf(totalMoney));
+                startActivityForResult(intent, ADJUST_MONEY_ACTIVITY_CODE);
+            }
+        });
+
+        btnCreateTran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        TransactionActivity.class);
+                intent.putExtra("total_money", String.valueOf(totalMoney));
+                startActivityForResult(intent, TRANSACTION_ACTIVITY_CODE);
             }
         });
     }
@@ -41,12 +51,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_MONEY_ACTIVITY_CODE){
+        TextView txtTotalMoney = findViewById(R.id.txtTotalMoney);
+        if (requestCode == ADJUST_MONEY_ACTIVITY_CODE){
             if (resultCode==RESULT_OK){
-                TextView txtTotalMoney = findViewById(R.id.txtTotalMoney);
                 Bundle bundle = data.getExtras();
                 if (bundle != null){
-                    totalMoney += Double.parseDouble((String)bundle.get("num_money"));
+                    totalMoney = Double.parseDouble((String)bundle.get("adjust_money"));
+                    txtTotalMoney.setText(String.valueOf(totalMoney));
+                }
+            }
+        }else{
+            if (resultCode==RESULT_OK){
+                Bundle bundle = data.getExtras();
+                if (bundle != null){
+                    totalMoney += Double.parseDouble((String)bundle.get("num_tran"));
                     txtTotalMoney.setText(String.valueOf(totalMoney));
                 }
             }

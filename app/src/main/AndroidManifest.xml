@@ -9,8 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TransactionActivity"></activity>
-        <activity android:name=".AddMoneyActivity"></activity>
+        <activity
+            android:name=".TransactionActivity"
+            android:parentActivityName=".MainActivity"
+            ></activity>
+        <activity
+            android:name=".AdjustmentActivity"
+            android:parentActivityName=".MainActivity"
+            ></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

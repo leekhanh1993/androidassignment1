@@ -17,11 +17,11 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:ems="10"
-        android:hint="How much!!!"
+        android:hint="Enter your transaction currency"
         android:inputType="numberDecimal"
         android:textAlignment="viewEnd" />
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -29,19 +29,18 @@
 
         <RadioButton
             android:id="@+id/rdbIncome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Income" />
 
         <RadioButton
             android:id="@+id/rdbExpense"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Expense" />
-
-    </LinearLayout>
+    </RadioGroup>
 
     <EditText
         android:id="@+id/edtDescription"

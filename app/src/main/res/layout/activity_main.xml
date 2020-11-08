@@ -16,12 +16,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/lbTotalMoney"
-            android:layout_width="341dp"
+            android:id="@+id/lbCurrentBalance"
+            android:layout_width="358dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Total Money"
-            android:textSize="30sp" />
+            android:text="Current Balance"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTotalMoney"
@@ -30,7 +31,7 @@
             android:layout_weight="1"
             android:text="0"
             android:textAlignment="viewEnd"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -41,16 +42,15 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnAddMoneyWallet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Money to Wallet" />
-
-        <Button
             android:id="@+id/btnCreateTran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Transaction" />
+        <Button
+            android:id="@+id/btnAdjustMoneyWallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adjust Money in Wallet" />
 
     </LinearLayout>
 
