@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class TransactionActivity extends AppCompatActivity {
 
     @Override
@@ -31,23 +33,16 @@ public class TransactionActivity extends AppCompatActivity {
                 Intent intentOut = new Intent(TransactionActivity.this,
                         MainActivity.class);
                 String numTransaction = edtTransaction.getText().toString();
-                if (!numTransaction.isEmpty()){ //check transaction number can not be empty
+
+                //get result from validation transaction field
+                ArrayList<String> validationResult = validationFieldTransaction(rdbExpense,
+                        rdbIncome, totalMoney, numTransaction);
+                if(validationResult.get(0).equals("true")){ //check transaction number can not be empty
                     if (rdbExpense.isChecked()){
-                        //check transaction number to make sure that it can can not greater
-                        // than current balance
-                        if(Double.parseDouble(totalMoney) >= Double.parseDouble(numTransaction)){
                             intentOut.putExtra("num_tran", String.format("%s%s", "-",
                                     numTransaction));
                             setResult(RESULT_OK, intentOut);
                             finish();
-                        }else{
-                            Toast toast = Toast.makeText(TransactionActivity.this,
-                                    "Adjusted money can not greater than current balance",
-                                    Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0,0);
-                            toast.show();
-                        }
-
                     }
                     if (rdbIncome.isChecked()){
                         intentOut.putExtra("num_tran", numTransaction);
@@ -57,12 +52,44 @@ public class TransactionActivity extends AppCompatActivity {
 
                 }else{
                     Toast toast = Toast.makeText(TransactionActivity.this,
-                            "Transaction Money can not be blanked!!!", Toast.LENGTH_SHORT);
+                            validationResult.get(1), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0,0);
                     toast.show();
                 }
 
             }
         });
+    }
+
+    private ArrayList<String> validationFieldTransaction(RadioButton rdbExpense,
+                                                        RadioButton rdbIncome,
+                                                         String totalMoney,
+                                                         String numTransaction){
+        ArrayList<String> result = new ArrayList<>();
+        //check transaction money
+        if(numTransaction.isEmpty()){
+            result.add("false");
+            result.add("Transaction Money can not be blanked!!!");
+            return result;
+        }
+
+        //check radio button
+        if(!rdbExpense.isChecked() && !rdbIncome.isChecked()){
+            result.add("false");
+            result.add("Please choose type of your transaction!!!");
+            return result;
+        }
+
+        //check transaction number to make sure that it can can not greater
+        // than current balance
+        if(rdbExpense.isChecked() &&
+                Double.parseDouble(totalMoney) < Double.parseDouble(numTransaction)){
+            result.add("false");
+            result.add("Adjusted money can not be greater than current balance!!!");
+        }
+
+        //set result true if all fields are filled
+        result.add("true");
+        return result;
     }
 }
