@@ -11,7 +11,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class TransactionActivity extends AppCompatActivity {
 
@@ -25,6 +28,10 @@ public class TransactionActivity extends AppCompatActivity {
         btnCreateTran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //create format date for user display
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy",
+                        Locale.getDefault());
+
                 RadioButton rdbExpense = findViewById(R.id.rdbExpense);
                 RadioButton rdbIncome = findViewById(R.id.rdbIncome);
                 TextView edtTransaction = findViewById(R.id.edtTransaction);
@@ -39,13 +46,19 @@ public class TransactionActivity extends AppCompatActivity {
                         rdbIncome, totalMoney, numTransaction);
                 if(validationResult.get(0).equals("true")){ //check transaction number can not be empty
                     if (rdbExpense.isChecked()){
-                            intentOut.putExtra("num_tran", String.format("%s%s", "-",
-                                    numTransaction));
+                            ArrayList<History> newHistory = new ArrayList<>();
+                            newHistory.add(new History("Expense",
+                                    String.format("%s%s","-", numTransaction),
+                                    sdf.format(new Date())));
+                            intentOut.putParcelableArrayListExtra("new_history", newHistory);
                             setResult(RESULT_OK, intentOut);
                             finish();
                     }
                     if (rdbIncome.isChecked()){
-                        intentOut.putExtra("num_tran", numTransaction);
+                        ArrayList<History> newHistory = new ArrayList<>();
+                        newHistory.add(new History("Income",
+                                numTransaction, sdf.format(new Date())));
+                        intentOut.putParcelableArrayListExtra("new_history", newHistory);
                         setResult(RESULT_OK, intentOut);
                         finish();
                     }

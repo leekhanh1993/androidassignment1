@@ -54,4 +54,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/lblTranHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Transaction History"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        tools:ignore="InvalidId">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>
